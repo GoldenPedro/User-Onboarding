@@ -3,6 +3,7 @@ import './App.css';
 import Form from './Components/Form'
 import * as yup from 'yup';
 import axios from 'axios'
+import User from './Components/User'
 
 const defaultValues = {
   name: '',
@@ -43,7 +44,7 @@ function App() {
     event.preventDefault();
 
     axios.post('https://reqres.in/api/users', formValues).then((response) => {
-      setPost(response.data)
+      setPost([response.data])
       console.log(response.data)
     })
 
@@ -76,8 +77,18 @@ function App() {
 
   return (
     <div className="App">
+      <h1>User Onboarding</h1>
       <Form formValues={formValues} handleChanges={handleChanges} submit={submit} buttonDisabled={buttonDisabled} errors={errors}/>
+
+      {
+      post.map(user => {
+        return (
+          <User details={user} />
+        )
+      })
+    }
     </div>
+    
   );
 }
 
